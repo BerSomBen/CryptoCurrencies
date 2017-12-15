@@ -1,0 +1,18 @@
+{
+  "name": "bitcoingrabber",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "node ./node_modules/mocha/bin/mocha"
+  },
+
+  "devDependencies": {
+    "selenium-webdriver": "^3.6.0",
+    "chromedriver": "^2.33.2",
+    "winston": "^2.4.0",
+    "bluebird": "^3.5.1",
+    "mocha": "^4.0.1",
+    "chai": "^4.1.2",
+    "exceljs":"^0.8.0"
+  }
+}
