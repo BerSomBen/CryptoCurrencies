@@ -15,7 +15,6 @@ let fs = require('fs'),
     path = require('path'),
     filename = path.join(__dirname, 'created-logfile.log');
 
-
 //
 // Create a new winston logger instance with two tranports: Console, and File
 //
