@@ -11,8 +11,7 @@ require("mocha");
 let expect = require("chai").expect;
 const winston = require('winston');
 
-let fs = require('fs'),
-    path = require('path'),
+let path = require('path'),
     filename = path.join(__dirname, 'created-logfile.log');
 
 //
@@ -156,12 +155,12 @@ describe("Get Latest Bitcoin Curses", function () {
     });
 
     xit("shell write data to xlsx", function () {
-        var Excel = require('exceljs');
+        let Excel = require('exceljs');
 
-        var workbook = new Excel.Workbook();
+        let workbook = new Excel.Workbook();
         let filename = "bitcoins.xlsx";
         return workbook.xlsx.readFile(filename).then(function () {
-            var worksheet = workbook.getWorksheet('Daten');
+            let worksheet = workbook.getWorksheet('Daten');
 
             return worksheet.addRow([new Date(),]);
 
