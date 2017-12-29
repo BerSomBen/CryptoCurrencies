@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "node ./node_modules/mocha/bin/mocha bitcoinGrabber.js"
+    "test": "node ./node_modules/mocha/bin/mocha -t 90000 bitcoinGrabber.js"
   },
 
   "devDependencies": {
