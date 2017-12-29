@@ -6,7 +6,7 @@ let BitCoinCash = require("./page/bitCoinCash.js");
 let Etherium = require("./page/Etherium.js");
 let Ripple = require("./page/Ripple.js");
 
-require("phantomjs");
+require("phantomjs-prebuilt");
 require("mocha");
 let expect = require("chai").expect;
 const winston = require('winston');
