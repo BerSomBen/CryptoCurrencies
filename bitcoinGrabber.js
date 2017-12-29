@@ -50,7 +50,7 @@ describe("Get Latest Bitcoin Curses", function () {
         }
     });
 
-    it("getCurrentTable", function () {
+    xit("getCurrentTable", function () {
         return driver.findElement(By.id("trade_offer_results_table_body")).then(function (elem) {
             return elem.getText().then(function (txt) {
                 logger.info(txt);
@@ -58,7 +58,7 @@ describe("Get Latest Bitcoin Curses", function () {
         });
     });
 
-    it("GetBuyValue Etherium", function () {
+    xit("GetBuyValue Etherium", function () {
         let curVal = 0;
         return driver.findElement(By.id("rate_buy")).then(function (elem) {
             return elem.getText().then(function (txt) {
@@ -87,7 +87,7 @@ describe("Get Latest Bitcoin Curses", function () {
         });
     });
 
-    it("GetBuyValue BitCoinCash", function () {
+    xit("GetBuyValue BitCoinCash", function () {
         let curVal = 0;
         return driver.get("https://www.bitcoin.de/de/bcheur/market").then(function () {
             return driver.sleep(1000);
@@ -121,7 +121,7 @@ describe("Get Latest Bitcoin Curses", function () {
         });
     });
 
-    it("GetBuyValue BitCoin", function () {
+    xit("GetBuyValue BitCoin", function () {
         let curVal = 0;
         return driver.get("https://www.bitcoin.de/de/btceur/market").then(function () {
             return driver.sleep(1000);
@@ -155,7 +155,7 @@ describe("Get Latest Bitcoin Curses", function () {
         });
     });
 
-    it("shell write data to xlsx", function () {
+    xit("shell write data to xlsx", function () {
         var Excel = require('exceljs');
 
         var workbook = new Excel.Workbook();
@@ -175,11 +175,11 @@ describe("Get Latest Bitcoin Curses", function () {
 
     });
 
-    it("class Bitcoin Test", function () {
+    xit("class Bitcoin Test", function () {
         let bla = new BitCoin(driver);
         expect(bla).not.to.be.undefined;
     });
-    it("class Bitcoin Test Get Value", function () {
+    xit("class Bitcoin Test Get Value", function () {
         let bla = new BitCoin(driver);
         return bla.getCurrentExchangeRate("0,01").then(function (val) {
             expect(val).to.be.greaterThan(10000);
@@ -191,20 +191,20 @@ describe("Get Latest Bitcoin Curses", function () {
         let bla = new BitCoinCash(driver);
         expect(bla).not.to.be.undefined;
     });
-    it("class Bitcoin Cash Test Get Value", function () {
+    xit("class Bitcoin Cash Test Get Value", function () {
         let bla = new BitCoinCash(driver);
         return bla.getCurrentExchangeRate("0,1").then(function (val) {
             expect(val).to.be.greaterThan(1000);
         })
     });
-    it("class Ripple Test Get Value", function () {
+    xit("class Ripple Test Get Value", function () {
         let bla = new Ripple(driver);
         return bla.getCurrentExchangeRate("1").then(function (val) {
             expect(val).to.be.greaterThan(1);
         })
     });
 
-    it("class Etherium Test", function () {
+    xit("class Etherium Test", function () {
         let bla = new BitCoinCash(driver);
         expect(bla).not.to.be.undefined;
     });
