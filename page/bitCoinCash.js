@@ -19,7 +19,7 @@ class BitCoinCash {
 
             return self.driver.findElement(By.id("rate_buy")).then(function (elem) {
                 return elem.getText().then(function (txt) {
-                    curVal = parseFloat(txt.replace(".", ""));
+                    curVal = parseFloat(txt.replace(".", "".replace(",", ".")));
                 });
             })
         }).then(function () {
@@ -28,7 +28,7 @@ class BitCoinCash {
             });
         }).then(function () {
             return self.driver.findElement(By.id("search_offer_critical_price")).then(function (elem) {
-                return elem.sendKeys(curVal + 150);
+                return elem.sendKeys(Math.trunc(curVal + 150));
             });
         }).then(function () {
             return self.driver.sleep(timeout);
@@ -37,8 +37,27 @@ class BitCoinCash {
             return self.driver.findElement(By.id("trade_offer_results_table_body")).then(function (elem) {
                 return elem.findElement(By.xpath("./tr/td[@class='aright']")).then(function (elem) {
                     return elem.getText().then(function (txt) {
-                        d.resolve(parseFloat(txt.replace(".", "")));
+                        d.resolve(parseFloat(txt.replace(".", "").replace(",", ".")));
 
+                    })
+                }, function (err) {
+                    return self.driver.findElement(By.id("search_offer_critical_price")).then(function (elem) {
+                        return elem.clear().then(function () {
+
+                            return elem.sendKeys(Math.trunc(curVal + 80));
+                        })
+                    }).then(function () {
+
+                        return self.driver.sleep(timeout);
+                    }).then(function () {
+                        return self.driver.findElement(By.id("trade_offer_results_table_body")).then(function (elem) {
+                            return elem.findElement(By.xpath("./tr/td[@class='aright']")).then(function (elem) {
+                                return elem.getText().then(function (txt) {
+                                    d.resolve(parseFloat(txt.replace(".", "").replace(",", ".")));
+
+                                })
+                            })
+                        })
                     })
                 })
             });

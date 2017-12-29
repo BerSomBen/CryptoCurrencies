@@ -4,6 +4,7 @@ let BitCoin = require("./page/bitCoin.js");
 let ExcelHelper = require("./page/ExcelHelper.js");
 let BitCoinCash = require("./page/bitCoinCash.js");
 let Etherium = require("./page/Etherium.js");
+let Ripple = require("./page/Ripple.js");
 
 require("chromedriver");
 require("mocha");
@@ -19,7 +20,7 @@ let fs = require('fs'),
 // Create a new winston logger instance with two tranports: Console, and File
 //
 //
-var logger = new (winston.Logger)({
+let logger = new (winston.Logger)({
     transports: [
         new (winston.transports.Console)(),
         new (winston.transports.File)({filename: filename})
@@ -192,6 +193,12 @@ describe("Get Latest Bitcoin Curs", function () {
             expect(val).to.be.greaterThan(1000);
         })
     });
+    it("class Ripple Test Get Value", function () {
+        let bla = new Ripple(driver);
+        return bla.getCurrentExchangeRate("1").then(function (val) {
+            expect(val).to.be.greaterThan(1);
+        })
+    });
 
     it("class Etherium Test", function () {
         let bla = new BitCoinCash(driver);
@@ -208,9 +215,11 @@ describe("Get Latest Bitcoin Curs", function () {
         let eth = new Etherium(driver);
         let btc = new BitCoin(driver);
         let bcc = new BitCoinCash(driver);
+        let rxp = new Ripple(driver);
         let btcValue = 0;
         let bccValue = 0;
         let ethValue = 0;
+        let rxpValue = 0;
 
         return eth.getCurrentExchangeRate("1").then(function (res) {
             ethValue = res;
@@ -223,7 +232,13 @@ describe("Get Latest Bitcoin Curs", function () {
                 btcValue = res;
             })
         }).then(function () {
-            let line = [new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').replace("-", ".").replace("-", "."), btcValue, bccValue, ethValue]
+            return rxp.getCurrentExchangeRate("1").then(function (res) {
+                rxpValue = res;
+            })
+        }).then(function () {
+            let line = [new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').replace("-", ".").replace("-", "."), btcValue, bccValue, ethValue, rxpValue];
+            logger.info(line);
+
             return bla.appendLineToFile("bitcoins.xlsx", line);
         }).then(function () {
             logger.info("did it!")

@@ -36,8 +36,27 @@ class BitCoin {
             return self.driver.findElement(By.id("trade_offer_results_table_body")).then(function (elem) {
                 return elem.findElement(By.xpath("./tr/td[@class='aright']")).then(function (elem) {
                     return elem.getText().then(function (txt) {
-                        d.resolve(parseFloat(txt.replace(".", "")));
+                        d.resolve(parseFloat(txt.replace(".", "").replace(",",".")));
 
+                    })
+                }, function (err) {
+                    return self.driver.findElement(By.id("search_offer_critical_price")).then(function (elem) {
+                        return elem.clear().then(function () {
+
+                            return elem.sendKeys(Math.trunc(curVal + 300));
+                        })
+                    }).then(function () {
+
+                        return self.driver.sleep(timeout);
+                    }).then(function () {
+                        return self.driver.findElement(By.id("trade_offer_results_table_body")).then(function (elem) {
+                            return elem.findElement(By.xpath("./tr/td[@class='aright']")).then(function (elem) {
+                                return elem.getText().then(function (txt) {
+                                    d.resolve(parseFloat(txt.replace(".", "").replace(",",".")));
+
+                                })
+                            })
+                        })
                     })
                 })
             });
@@ -46,4 +65,5 @@ class BitCoin {
     }
 }
 
-module.exports = BitCoin;
+module
+    .exports = BitCoin;
