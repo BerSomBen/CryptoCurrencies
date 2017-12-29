@@ -6,7 +6,7 @@ let BitCoinCash = require("./page/bitCoinCash.js");
 let Etherium = require("./page/Etherium.js");
 let Ripple = require("./page/Ripple.js");
 
-require("chromedriver");
+require("phantomjs");
 require("mocha");
 let expect = require("chai").expect;
 const winston = require('winston');
@@ -28,12 +28,12 @@ let logger = new (winston.Logger)({
 });
 
 
-let driver;
-describe("Get Latest Bitcoin Curs", function () {
+let driver = null;
+describe("Get Latest Bitcoin Curses", function () {
     before(function () {
 
         driver = new webdriver.Builder()
-            .withCapabilities(webdriver.Capabilities.chrome())
+            .withCapabilities(webdriver.Capabilities.phantomjs())
             .build();
         return driver.get("https://www.bitcoin.de/de/etheur/market").then(function () {
             return driver.sleep(1000);
@@ -43,7 +43,12 @@ describe("Get Latest Bitcoin Curs", function () {
     });
 
     after(function () {
-        return driver.quit();
+        try {
+            return driver.quit();
+
+        } catch (ex) {
+            return driver.close();
+        }
     });
 
     it("getCurrentTable", function () {
@@ -100,7 +105,7 @@ describe("Get Latest Bitcoin Curs", function () {
             });
         }).then(function () {
             return driver.findElement(By.id("search_offer_critical_price")).then(function (elem) {
-                return elem.sendKeys(curVal + 10);
+                return elem.sendKeys(curVal + 200);
             });
         }).then(function () {
             return driver.sleep(1000);
