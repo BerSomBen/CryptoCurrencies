@@ -5,6 +5,7 @@ let ExcelHelper = require("./page/ExcelHelper.js");
 let BitCoinCash = require("./page/bitCoinCash.js");
 let Etherium = require("./page/Etherium.js");
 let Ripple = require("./page/Ripple.js");
+let CsvHelper = require("./helper/CsvHelper.js");
 
 require("phantomjs-prebuilt");
 require("mocha");
@@ -25,7 +26,7 @@ let logger = new (winston.Logger)({
     ]
 });
 
-
+let timestamp = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').replace("-", ".").replace("-", ".");
 let driver = null;
 describe("Get Latest Bitcoin Curses", function () {
     before(function () {
@@ -247,7 +248,60 @@ describe("Get Latest Bitcoin Curses", function () {
             logger.info("did it!")
         });
 
+    });
+
+    it("getAllAndAddToCSV", function () {
+        let bla = new ExcelHelper();
+        let eth = new Etherium(driver);
+        let btc = new BitCoin(driver);
+        let bcc = new BitCoinCash(driver);
+        let rxp = new Ripple(driver);
+        let btcValue = 0;
+        let bccValue = 0;
+        let ethValue = 0;
+        let rxpValue = 0;
+
+        return eth.getCurrentExchangeRate("1").then(function (res) {
+            ethValue = res;
+        }).then(function () {
+            return bcc.getCurrentExchangeRate("0,1").then(function (res) {
+                bccValue = res;
+            })
+        }).then(function () {
+            return btc.getCurrentExchangeRate("0,01").then(function (res) {
+                btcValue = res;
+            })
+        }).then(function () {
+            return rxp.getCurrentExchangeRate("1").then(function (res) {
+                rxpValue = res;
+            })
+        }).then(function () {
+            let line = [timestamp, btcValue, bccValue, ethValue, rxpValue];
+            logger.info(line);
+            let cvs = new CsvHelper("out.csv");
+            let data = {};
+            data["Timestamp"] = timestamp;
+            data["Bitcoin"] = btcValue;
+            data["BitcoinCash"] = bccValue;
+            data["Etherium"] = ethValue;
+            data["Ripple"] = rxpValue;
+            cvs.writeAppendToFile(data)
+        }).then(function () {
+            logger.info("did it!")
+        });
 
     });
+
+    xit("shell write the reuslt to csv", () => {
+        let cvs = new CsvHelper("out.csv");
+        let data = {};
+        data["Timestamp"] = timestamp;
+        data["Bitcoin"] = 1.56;
+        data["BitcoinCash"] = 12332;
+        data["Etherium"] = 600;
+        data["Ripple"] = 1.54;
+        cvs.writeAppendToFile(data)
+
+    })
 
 });
