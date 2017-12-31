@@ -187,7 +187,7 @@ describe("Get Latest Bitcoin Curses", function () {
     });
 
 
-    it("class Bitcoin Test", function () {
+    xit("class Bitcoin Test", function () {
         let bla = new BitCoinCash(driver);
         expect(bla).not.to.be.undefined;
     });
@@ -208,13 +208,13 @@ describe("Get Latest Bitcoin Curses", function () {
         let bla = new BitCoinCash(driver);
         expect(bla).not.to.be.undefined;
     });
-    it("class Etherium Test Get Value", function () {
+    xit("class Etherium Test Get Value", function () {
         let bla = new Etherium(driver);
         return bla.getCurrentExchangeRate("1").then(function (val) {
             expect(val).to.be.greaterThan(500);
         })
     });
-    it("getAllAndAddToSpreadSheet", function () {
+    xit("getAllAndAddToSpreadSheet", function () {
         let bla = new ExcelHelper();
         let eth = new Etherium(driver);
         let btc = new BitCoin(driver);
@@ -251,7 +251,6 @@ describe("Get Latest Bitcoin Curses", function () {
     });
 
     it("getAllAndAddToCSV", function () {
-        let bla = new ExcelHelper();
         let eth = new Etherium(driver);
         let btc = new BitCoin(driver);
         let bcc = new BitCoinCash(driver);
@@ -292,7 +291,7 @@ describe("Get Latest Bitcoin Curses", function () {
 
     });
 
-    xit("shell write the reuslt to csv", () => {
+    xit("shell write the result to csv", () => {
         let cvs = new CsvHelper("out.csv");
         let data = {};
         data["Timestamp"] = timestamp;
