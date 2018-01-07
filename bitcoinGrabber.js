@@ -214,7 +214,7 @@ describe("Get Latest Bitcoin Curses", function () {
             expect(val).to.be.greaterThan(500);
         })
     });
-    xit("getAllAndAddToSpreadSheet", function () {
+    it("getAllAndAddToSpreadSheet", function () {
         let bla = new ExcelHelper();
         let eth = new Etherium(driver);
         let btc = new BitCoin(driver);
@@ -299,8 +299,18 @@ describe("Get Latest Bitcoin Curses", function () {
         data["BitcoinCash"] = 12332;
         data["Etherium"] = 600;
         data["Ripple"] = 1.54;
-        cvs.writeAppendToFile(data)
+        cvs.writeAppendToFile(data);
 
     })
+    it("shell write the seperate csv files", () => {
+        let cvs = new CsvHelper("out[currency].csv");
+        let data = {};
+        data["Timestamp"] = timestamp;
+        data["Bitcoin"] = 1.56;
+        data["BitcoinCash"] = 12332;
+        data["Etherium"] = 600;
+        data["Ripple"] = 1.54;
+        cvs.writeAppendToCurrencyFiles(data);
 
+    })
 });
